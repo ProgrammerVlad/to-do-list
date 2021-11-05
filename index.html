@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+  <title>to-do-list</title>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="container">
+      <div class="top__title">TO DO LIST</div>
+        <div class="top__row">
+          <div class="form">
+            <input class="form__input" id="todoInput" type="text" placeholder="Add new Todo">
+            <button class="form__button" id="addBtn"></button>
+          </div>
+          <div class="select">
+            <div class="select__header" id="filterHeader">
+              <span class="select__current" id="filterCurrent">All</span>
+              <div class="select__icon"></div>
+            </div>
+            <div class="select__body" id="filterBody">
+              <div class="select__item">All</div>
+              <div class="select__item">Completed</div>
+              <div class="select__item">Uncompleted</div>
+            </div>
+          </div>
+        </div>
+        <div class="bottom__row">
+          <ul class="todo__list" id="todoList">
+          </ul>
+        </div>
+    </div>
+    <div class="wrapper__modal" id="modalAddError">
+      <img src="img/warning.png" alt="Warning" class="modal__image">
+      <div id="modalText" class="modal__text">Ошибка, добавлять можно только в режиме ALL</div>
+    </div>
+  </div>
+  <script src="js/script.js"></script>
+</body>
+</html>
