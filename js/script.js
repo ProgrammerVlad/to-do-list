@@ -71,18 +71,14 @@ function createTodoElement(task, index) {
             updateTodosStorage();
         }
   }
-  function deleteTodoElement(list = todos) {
-      console.log($currentFilterValue.innerText);
-      if($currentFilterValue.innerText !== 'All'){
-        $modalText.innerText = 'Удаление доступно только в режиме All';
-        errorModalWindow();
-      }
-      else{
-        $todoButtonDelete.closest('li').remove();
-        todos.splice(index, 1);
-        renderHTML();
-        updateTodosStorage();
-      }
+  function deleteTodoElement() {
+      todos.forEach((todo, index) => {
+          if($todoText.innerHTML == todo.message) {
+              todos.splice(index, 1);
+              $todoBody.remove();
+              updateTodosStorage();
+          }
+      });
   }
 
   $todoButtonDone.addEventListener('click', checkTodoElement);
@@ -105,8 +101,6 @@ function updateTodosStorage() {
   localStorage.setItem('todo', JSON.stringify(todos));
 }
 
-
-
 function todosFilter() {
   $filterHeader.addEventListener('click', () => {
     $filterBody.classList.toggle('isActive');
@@ -115,10 +109,8 @@ function todosFilter() {
       $filterBody.addEventListener('click', (event) => {
         $currentFilterValue.innerText = event.target.innerText;
         $filterBody.classList.remove('isActive');
-
         if($currentFilterValue.innerText == 'All') {
           renderHTML();
-
 
           $addTodo.removeEventListener('click', errorModalWindow);
           $addTodo.addEventListener('click', createTodo);
@@ -127,18 +119,12 @@ function todosFilter() {
           const completedTodos = todos.filter(item => item.status == 'completed');
           renderHTML(completedTodos);
 
-          $modalText.innerText = 'Ошибка, добавлять можно только в режиме All';
-
-          $addTodo.removeEventListener('click', createTodo);
-          $addTodo.addEventListener('click', errorModalWindow);
+          blockAddTodo($addTodo);
         } else {
           const activeTodos = todos.filter(item => item.status == 'active');
           renderHTML(activeTodos);
 
-          $modalText.innerText = 'Ошибка, добавлять можно только в режиме All';
-
-          $addTodo.removeEventListener('click', createTodo);
-          $addTodo.addEventListener('click', errorModalWindow);
+          blockAddTodo($addTodo);
         }
       });
     }
@@ -152,6 +138,13 @@ function errorModalWindow() {
   setTimeout(() => {
     $modalWindow.classList.remove('addError');
   }, 1500);
+}
+
+function blockAddTodo(element1, element2) {
+  $modalText.innerText = 'Ошибка, добавлять можно только в режиме All';
+
+  element1.removeEventListener('click', createTodo);
+  element1.addEventListener('click', errorModalWindow);
 }
 
 
